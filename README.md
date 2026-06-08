@@ -34,3 +34,28 @@
    
    # Или через pip
    pip install uv
+   ```
+## Systemd (Рекомендуется для VPS/VDS)
+   Настрока сервиса
+   ```bash
+   [Unit]
+   Description=Telegram Contest Bot
+   After=network.target
+   
+   [Service]
+   WorkingDirectory=/path/to/your/contest_bot
+   # Укажите абсолютный путь к uv (узнать можно командой: which uv)
+   ExecStart=/home/your_user/.cargo/bin/uv run python src/main.py
+   Restart=always
+   RestartSec=3
+   User=your_user
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   Запуск сервиса
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable contest-bot
+   sudo systemctl start contest-bot
+   ```
